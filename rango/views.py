@@ -4,12 +4,14 @@ from rango.models import Category
 from rango.models import Page
 
 def index(request):
-    # Query database for an ordered list of the 5 most liked categories
+    # Query database
     category_list = Category.objects.order_by('-likes')[:5]
+    page_list = Page.objects.order_by('-views')[:5]
     # Construct a dictionary to pass to the template engine as its context
     context_dict = {}
     context_dict['boldmessage'] = 'Crunchy, creamy, cookie, candy, cupcake!'
     context_dict['categories'] = category_list
+    context_dict['pages'] = page_list
     # Return a rendered response to send to the client
     return render(request, 'rango/index.html', context=context_dict)
 
